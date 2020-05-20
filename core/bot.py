@@ -1,6 +1,7 @@
 import logging
 
 from telegram.ext import Updater, CommandHandler, Filters
+from .handlers import start
 
 
 def setup_log():
@@ -26,7 +27,11 @@ def run(token, execution_type='polling', host='localhost', port=80,
         webhook_url='/'):
     setup_log()
 
-    updater = Updater(token)
+    updater = Updater(token, use_context=True)
+    updater.dispatcher.add_handler(CommandHandler('start', start,
+                                   pass_args=True,
+                                   pass_job_queue=True,
+                                   pass_chat_data=True))
 
     if execution_type == 'webhook':
         start_webhook(updater, host, port, webhook_url)
