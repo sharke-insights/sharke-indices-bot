@@ -29,7 +29,6 @@ def create_daily_job(context, callback, execution_time, days, job_context):
 
 
 def start(update, context):
-    logger.debug("Entrando no start")
     message_start = "Olá %s, eu faço parte a equipe Sharke Insights e vou te manter atualizado com os principais índices do mercado financeiro" % update.message.from_user.first_name
 
     update.message.reply_text(message_start)
