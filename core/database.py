@@ -33,9 +33,9 @@ class Database:
         curr_data = self.data()
 
         try:
-            curr_data['ids'].append(data)
+            curr_data['chat_ids'].append(data)
         except KeyError:
-            curr_data = {"ids": [data]}
+            curr_data = {"chat_ids": [data]}
 
         with open(self.filepath, "w") as fp:
             json.dump(curr_data, fp)

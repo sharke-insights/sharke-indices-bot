@@ -1,7 +1,9 @@
 import logging
 
-from telegram.ext import Updater, CommandHandler, Filters
-from .handlers import start
+from telegram.ext import Updater, CommandHandler
+from .handlers import start, setup_daily_jobs
+from .database import Database
+from .envs import FILE_IDS_PATH
 
 
 def setup_log():
@@ -27,7 +29,13 @@ def run(token, execution_type='polling', host='localhost', port=80,
         webhook_url='/'):
     setup_log()
 
+    db = Database(FILE_IDS_PATH)
+    chat_ids = db.data().get("chat_ids", [])
+
     updater = Updater(token, use_context=True)
+
+    setup_daily_jobs(updater, chat_ids)
+
     updater.dispatcher.add_handler(CommandHandler('start', start,
                                    pass_args=True,
                                    pass_job_queue=True,
