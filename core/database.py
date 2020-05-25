@@ -33,7 +33,8 @@ class Database:
         curr_data = self.data()
 
         try:
-            curr_data['chat_ids'].append(data)
+            if data not in curr_data['chat_ids']:
+                curr_data['chat_ids'].append(data)
         except KeyError:
             curr_data = {"chat_ids": [data]}
 
