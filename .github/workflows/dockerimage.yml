@@ -16,3 +16,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag sharke-indices-bot:${GITHUB_SHA::8}
+    - name: Deploy the Docker image
+      run: |
+        docker login docker.pkg.github.com -u matheusbsilva -p ${{ secrets.GITHUB_TOKEN }}
+        docker tag sharke-indices-bot:${GITHUB_SHA::8} docker.pkg.github.com/sharke-insights/sharke-indices-bot/sharke-indices-bot:${GITHUB_SHA::8}
+        docker push docker.pkg.github.com/sharke-insights/sharke-indices-bot/sharke-indices-bot:${GITHUB_SHA::8}
