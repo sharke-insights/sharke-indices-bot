@@ -1,7 +1,7 @@
 import logging
 
 from telegram.ext import Updater, CommandHandler
-from .handlers import start, setup_daily_jobs
+from .handlers import start, now, setup_daily_jobs
 from .database import Database
 from .envs import FILE_IDS_PATH, WEBHOOK_TOKEN
 
@@ -43,6 +43,9 @@ def run(token, execution_type='polling', host='localhost', port=80,
                                    pass_job_queue=True,
                                    pass_chat_data=True))
 
+    updater.dispatcher.add_handler(CommandHandler('now', now,
+                                   pass_args=True,
+                                   pass_chat_data=True))
     if execution_type == 'webhook':
         start_webhook(updater, host, port, webhook_url)
     elif execution_type == 'polling':

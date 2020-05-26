@@ -65,3 +65,27 @@ def get_ifix():
     """
     ifix_symbol = "IFIX.SA"
     return get_yahoo_finance(ifix_symbol)
+
+
+def market_indexes_message():
+    ibov_time, ibov_price, ibov_profit = get_ibovespa()
+    sandp_time, sandp_price, sandp_profit = get_sandp()
+    ifix_time, ifix_price, ifix_profit = get_ifix()
+    dolar_time, dolar_price, dolar_profit = get_dolar_to_brl()
+
+    message = """
+IBOVESPA 💲 `{ibov_price}`  📈 `{ibov_profit}`  🕠 `{ibov_time}`
+
+S&P 500 💲 `{sandp_price}`  📈 `{sandp_profit}`  🕠 `{sandp_time}`
+
+IFIX 💲 `{ifix_price}`  📈 `{ifix_profit}`  🕠 `{ifix_time}`
+
+Dólar 💲 `{dolar_price}`  📈 `{dolar_profit}`  🕠 `{dolar_time}`
+    """.format(ibov_price=ibov_price, ibov_time=ibov_time, ibov_profit=ibov_profit,
+               sandp_price=sandp_price, sandp_time=sandp_time, sandp_profit=sandp_profit,
+               ifix_price=ifix_price, ifix_time=ifix_time, ifix_profit=ifix_profit,
+               dolar_price=dolar_price, dolar_time=dolar_time, dolar_profit=dolar_profit)
+
+    return message
+
+

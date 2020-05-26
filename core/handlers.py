@@ -7,6 +7,7 @@ from telegram.ext import Updater
 from .jobs import daily_indexes
 from .database import Database
 from .envs import TIMEZONE, HOUR, MINUTE, FILE_IDS_PATH
+from extensions.market_indexes import market_indexes_message
 
 logger = logger = logging.getLogger(__name__)
 
@@ -60,3 +61,9 @@ def start(update, context):
     db.save(chat_id)
 
     update.message.reply_text("Todas as configurações foram feitas com sucesso, te manterei atualizado de Segunda a Sexta!")
+
+
+def now(update, context):
+    message = "Buscando cotações..."
+    update.message.reply_text(message)
+    update.message.reply_markdown(market_indexes_message())
