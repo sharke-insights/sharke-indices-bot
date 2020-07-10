@@ -67,3 +67,18 @@ def now(update, context):
     message = "Buscando cotações..."
     update.message.reply_text(message)
     update.message.reply_markdown(market_indexes_message())
+
+
+def add_to_channel(update, context):
+    db = Database(FILE_IDS_PATH)
+    try:
+        channel_id = context.args[0]
+    except IndexError:
+        update.message.reply_text("É necessário passar o @ do canal!")
+
+    db.save(channel_id)
+    user = update.message.from_user.username
+
+    message = "Olá, eu faço parte a equipe Sharke Insights e vou manter esse grupo atualizado com os principais índices do mercado financeiro. Fui adicionado pelo usuário %s." % user
+
+    context.bot.send_message(chat_id=channel_id, text=message)
