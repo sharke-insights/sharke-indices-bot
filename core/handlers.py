@@ -79,6 +79,12 @@ def add_to_channel(update, context):
     db.save(channel_id)
     user = update.message.from_user.username
 
+    timezone = pytz.timezone(TIMEZONE)
+    e_time = time(hour=HOUR, minute=MINUTE, tzinfo=timezone)
+    context.chat_data['job'] = create_daily_job(context, daily_indexes,
+                                                e_time, tuple(range(1, 5)),
+                                                channel_id)
+
     message = "Olá, eu faço parte a equipe Sharke Insights e vou manter esse grupo atualizado com os principais índices do mercado financeiro. Fui adicionado pelo usuário %s." % user
 
     context.bot.send_message(chat_id=channel_id, text=message)
